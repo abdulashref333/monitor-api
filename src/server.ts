@@ -5,7 +5,6 @@ import express, { Response } from "express";
 import { ValidationError } from "./errors/validation-error";
 import { errorHandler } from "./middlewares/error-handler";
 import apiRoutes from "./routes/index";
-require("express-async-errors");
 
 export const app = express();
 

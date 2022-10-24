@@ -1,4 +1,10 @@
-import { getModelForClass, modelOptions, prop, Severity } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  modelOptions,
+  Prop,
+  prop,
+  Severity,
+} from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { warnMixed } from "@typegoose/typegoose/lib/internal/utils";
 import { Allow, Contains, IsBoolean, IsEnum, IsNotEmpty } from "class-validator";
@@ -11,8 +17,11 @@ interface IAuthentaction {
 }
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
 export class Check extends TimeStamps {
-  @prop({ required: false })
-  email?: string;
+  @prop({ required: true })
+  userId: mongoose.Types.ObjectId;
+
+  @prop({ required: true })
+  email: string;
 
   @IsNotEmpty()
   @prop({ required: true })
@@ -54,5 +63,8 @@ export class Check extends TimeStamps {
 
   @prop({ default: 0 })
   countFault?: number;
+
+  @Prop({ default: false })
+  isDeleted?: boolean;
 }
 export const CheckModel = getModelForClass(Check);

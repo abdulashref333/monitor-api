@@ -15,7 +15,7 @@ class UserController {
         if (user !== null) {
           const accessToken = UserModel.generateToken(
             user._id.toString(),
-            { email, id: user.id },
+            { email, id: user._id },
             "2h"
           );
           CustomResponse.send(res, { user, accessToken });

@@ -1,6 +1,6 @@
-import { createClient } from 'redis';
+import * as redis from "redis";
 
-const client = createClient({url: 'redis://localhost:6379'});
-client.on("error", (err) => console.log("Redis Client Error", err));
+const client = redis.createClient({ url: "redis://localhost:6379" });
+client.on("error", err => console.log("Redis Client Error", err));
 
 export default client;

@@ -8,7 +8,7 @@ checks.use(auth);
 checks
   .get("/", CheckController.getAllChecks)
   .post("/", CheckController.createCheck)
-  .patch("/", CheckController.updateCheck)
-  .delete("/", CheckController.deleteCheck);
+  .patch("/:id", CheckController.updateCheck)
+  .delete("/:id", CheckController.deleteCheck);
 
 export default checks;

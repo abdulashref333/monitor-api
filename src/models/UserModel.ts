@@ -1,4 +1,10 @@
-import { getModelForClass, Index, prop, ReturnModelType } from "@typegoose/typegoose";
+import {
+  getModelForClass,
+  Index,
+  Prop,
+  prop,
+  ReturnModelType,
+} from "@typegoose/typegoose";
 import { TimeStamps } from "@typegoose/typegoose/lib/defaultClasses";
 import { IsEmail } from "class-validator";
 import crypto from "crypto";
@@ -22,6 +28,9 @@ class User extends TimeStamps {
 
   @prop({ required: true })
   password: string;
+
+  @Prop({ default: false })
+  active?: boolean;
 
   public static getPasswordHashed(password: string) {
     return crypto.createHash("sha256").update(password).digest("hex");

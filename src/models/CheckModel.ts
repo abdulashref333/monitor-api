@@ -1,5 +1,6 @@
 import {
   getModelForClass,
+  Index,
   modelOptions,
   Prop,
   prop,
@@ -15,7 +16,9 @@ interface IAuthentaction {
   username: string;
   password: string;
 }
+
 @modelOptions({ options: { allowMixed: Severity.ALLOW } })
+@Index({ userId: 1, isDeleted: 1 })
 export class Check extends TimeStamps {
   @prop({ required: true })
   userId: mongoose.Types.ObjectId;

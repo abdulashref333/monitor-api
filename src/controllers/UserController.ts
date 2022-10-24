@@ -2,8 +2,7 @@ import { Request, Response } from "express";
 import { BadRequestError } from "../errors/bad-request-error";
 import UserModel from "../models/UserModel";
 import { CustomResponse } from "../utils/custome-response";
-import agenda from "../jobs/agenda";
-import sendEmail from "../notifications/email";
+import registerEventEmitter from "../events/register";
 
 class UserController {
   async login(req: Request, res: Response, next: any): Promise<void> {
@@ -32,19 +31,32 @@ class UserController {
   async signup(req: Request, res: Response, next: any) {
     try {
       const { email, password, name } = req.body;
-      const data = await UserModel.createUser(email, password, name);
-      CustomResponse.send(res, data);
+      const user = await UserModel.createUser(email, password, name);
+      const accessToken = UserModel.generateToken(
+        user._id.toString(),
+        { email, id: user._id },
+        "2h"
+      );
 
-      //   sendEmail({
-      //     email,
-      //     subject: "Verfication Email.",
-      //     message: "welcome to monitor api please verfie your email.",
-      //   });
-      // agenda schedual..
-      //   const scheduleAgenda = agenda.create("Check Scheduling", { message: "ahlan" });
-      //   scheduleAgenda.repeatEvery("5 seconds").save();
+      CustomResponse.send(res, { user, accessToken });
+
+      registerEventEmitter.emit("register", { email, name, id: user._id.toString() });
     } catch (error) {
       console.log(error);
+      next(error);
+    }
+  }
+
+  async verify(req: Request, res: Response, next: any) {
+    const id = req.query.token;
+    try {
+      const user = await UserModel.findById(id);
+      if (user != null) {
+        await UserModel.updateOne({ id }, { active: true });
+        return CustomResponse.send(res, "Email verified.");
+      }
+      CustomResponse.send(res, {}, "Email not verified.", 400);
+    } catch (error) {
       next(error);
     }
   }

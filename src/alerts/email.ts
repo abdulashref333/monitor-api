@@ -4,6 +4,7 @@ interface IEmailMessage {
   email: string;
   subject: string;
   message?: string;
+  html?: any;
 }
 
 const sendEmail = (options: IEmailMessage) => {
@@ -21,6 +22,7 @@ const sendEmail = (options: IEmailMessage) => {
       to: options.email,
       subject: options.subject,
       text: options.message,
+      html: options.html,
     };
 
     try {

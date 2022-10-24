@@ -1,5 +1,5 @@
 import EventEmitter from "events";
-import sendEmail from "../notifications/email";
+import sendEmail from "../alerts/email";
 
 const alertEventEmitter = new EventEmitter();
 

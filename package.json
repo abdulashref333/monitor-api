@@ -7,7 +7,7 @@
     "start": "nodemon src/index.ts",
     "start:prod": "node dist/index.js",
     "build": "rm -rf ./dist/* && tsc --build",
-    "test": "jest"
+    "test": "export NODE_ENV=test && jest"
   },
   "keywords": [],
   "author": "Abdelrahman Ashraf",

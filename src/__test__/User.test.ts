@@ -3,13 +3,13 @@ import supertest from "supertest";
 import { app, startServer } from "../server";
 const request = supertest(app);
 
-describe("User Test", () => {
+describe.skip("User Test", () => {
   beforeAll(async () => {
     await startServer();
     await connect(`mongodb://localhost:27017/monitor-db-test`, {});
   });
   // successfull login
-  test("Login success", done => {
+  test("Should Login successfully", done => {
     request
       .post("/api/users/signup")
       .send({
@@ -34,7 +34,7 @@ describe("User Test", () => {
       });
   });
   // fail login
-  test("Login fail", done => {
+  test("Should fail after login with wrong data.", done => {
     request
       .post("/api/users/login")
       .send({

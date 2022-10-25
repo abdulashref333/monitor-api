@@ -3,6 +3,7 @@ import { BadRequestError } from "../errors/bad-request-error";
 import UserModel from "../models/UserModel";
 import { CustomResponse } from "../utils/custome-response";
 import registerEventEmitter from "../events/register";
+import mongoose from "mongoose";
 
 class UserController {
   async login(req: Request, res: Response, next: any): Promise<void> {
@@ -46,13 +47,12 @@ class UserController {
       next(error);
     }
   }
-
   async verify(req: Request, res: Response, next: any) {
     const id = req.query.token;
     try {
       const user = await UserModel.findById(id);
       if (user != null) {
-        await UserModel.updateOne({ id }, { active: true });
+        await UserModel.findByIdAndUpdate(id, { active: true });
         return CustomResponse.send(res, "Email verified.");
       }
       CustomResponse.send(res, {}, "Email not verified.", 400);

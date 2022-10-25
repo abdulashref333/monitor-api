@@ -6,6 +6,7 @@ import { CustomResponse } from "../utils/custome-response";
 import { ValidationError } from "../errors/validation-error";
 import { CheckInput } from "../models/inputs/CheckInput";
 import mongoose, { mongo } from "mongoose";
+import { Schedules } from "../models/enums";
 
 class CheckController {
   async getAllChecks(req: Request, res: Response, next: any) {
@@ -42,7 +43,7 @@ class CheckController {
         interval: req.body.interval,
       });
 
-      const scheduleAgenda = agenda.create(`Check Scheduling`, newCheck);
+      const scheduleAgenda = agenda.create(Schedules.PING_SCHEDULE, newCheck);
       scheduleAgenda.repeatEvery(newCheck.interval!).save();
       const job = await agenda.jobs({ "data._id": newCheck._id });
       newCheck.jobId = job[0].attrs._id?.toString();

@@ -41,6 +41,10 @@
  npm run test
 ```
 
+## API - Insomnia file
+
+- download [monitor-api-insomnia](monitor-api-insomnia.json) and import it in Insomnia to test the api endpoints.
+
 ## API Routes
 
 ```Base URL
@@ -50,20 +54,20 @@ http://localhost:7000/api/
 - `Please note that the request body should be in a JSON formate.`
   &nbsp;
 
-|    Routes     | Method |               Description               |                  Request Body                   |
-| :-----------: | :----: | :-------------------------------------: | :---------------------------------------------: |
+|    Routes     | Method |               Description               |                                        Request Body                                        |
+| :-----------: | :----: | :-------------------------------------: | :----------------------------------------------------------------------------------------: |
 |               | Users  |
-| /users/signup |  POST  |             Register a User             | {name: string, email: string, password: string} |
-| /users/login  |  POST  |              Login A user               |        {email:string, password:"string"}        |
+| /users/signup |  POST  |             Register a User             |                      {name: string, email: string, password: string}                       |
+| /users/login  |  POST  |              Login A user               |                             {email:string, password:"string"}                              |
 |               | Checks |
-|    /checks    |  POST  |           create new cron job           |                       {}                        |
-|  /checks/:id  | PATCH  |     update check with it's crob job     |                       {}                        |
-|  /checks/:id  | DELETE | delete the check url with it's cron job |                       {}                        |
-|    /checks    |  GET   |          get the check details          |                                                 |
+|    /checks    |  POST  |           create new cron job           | {"url":"localhost","name":"checklocalhost","port":3000,"ignoreSSL":true,"protocol":"http"} |
+|  /checks/:id  | PATCH  |     update check with it's crob job     |                                all properties are optional                                 |
+|  /checks/:id  | DELETE | delete the check url with it's cron job |                                                                                            |
+|    /checks    |  GET   |          get the check details          |                                                                                            |
 
 &nbsp;
 
-### Routes that need a token as shown below :
+### Routes that need a token :
 
 - All checks endpoints
 - All reports endpoints
